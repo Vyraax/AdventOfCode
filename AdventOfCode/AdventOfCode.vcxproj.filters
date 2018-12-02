@@ -27,4 +27,12 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="day1.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="day2.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
