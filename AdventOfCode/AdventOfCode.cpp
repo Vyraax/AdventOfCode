@@ -16,21 +16,21 @@ int d1p2()
 	std::ifstream file("day1.txt");
 	std::vector<int> lines;
 	std::unordered_map<int, char> map;
-	int found = 0, current = 0;
+	int found = 0, sum = 0;
 
 	for (std::string line; std::getline(file, line);)
 		lines.push_back(std::stoi(line));
 
-	while (found == 0) {
-		for(auto line : lines) {
-			current += line;
+	while (!found) {
+		for(const int& line : lines) {
+			sum += line;
 
-			if (map.find(current) != map.end()) {
-				found = current;
+			if (map.find(sum) != map.end()) {
+				found = sum;
 				break;
 			}
 
-			map[current] = 0;
+			map[sum] = 0;
 		}
 	}
 
@@ -38,7 +38,7 @@ int d1p2()
 }
 
 double getReport(clock_t end, clock_t start) {
-	return  (double)(end - start) / CLOCKS_PER_SEC;
+	return (double)(end - start) / CLOCKS_PER_SEC;
 }
 
 int main()
@@ -51,10 +51,13 @@ int main()
 	clock_t d1p1_start = clock();
 	int d1p1_res = d1p1();
 	clock_t d1p1_end = clock();
-	std::cout << "\tPart 1: " << d1p1_res << "\tTime: " << getReport(d1p1_end, d1p1_start) << std::endl;
+	std::cout << "\tPart 1: " << d1p1_res << "\tTime: " << getReport(d1p1_end, d1p1_start) << " s" << std::endl;
 
 	clock_t d1p2_start = clock();
 	int d1p2_res = d1p2();
 	clock_t d1p2_end = clock();
-	std::cout << "\tPart 2: " << d1p2_res << "\tTime: " << getReport(d1p2_end, d1p2_start) << std::endl;
+	std::cout << "\tPart 2: " << d1p2_res << "\tTime: " << getReport(d1p2_end, d1p2_start) << " s" << std::endl;
+
+	system("pause");
+	return 0;
 }
