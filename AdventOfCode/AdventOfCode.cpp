@@ -1,6 +1,6 @@
 #include "pch.h"
 
-std::string dayOne()
+int dayOne()
 {
 	std::string line;
 	std::ifstream file("day1.txt");
@@ -8,14 +8,16 @@ std::string dayOne()
 	if (!file.is_open())
 		return NULL;
 
+	int current = 0;
+
 	while (getline(file, line))
 	{
-		std::cout << line << '\n';
+		int n = std::stoi(line);
+		current += n;
 	}
 
 	file.close();
-
-	return "ok";
+	return current;
 }
 
 int main()
