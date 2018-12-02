@@ -4,36 +4,34 @@ int d1p1()
 {
 	std::ifstream file("day1.txt");
 	std::vector<int> lines;
-	std::string line;
+	int sum = 0;
 
-	while (std::getline(file, line))
-		lines.push_back(std::stoi(line));
+	for (std::string line; std::getline(file, line);)
+		sum += std::stoi(line);
 
-	return std::accumulate(lines.begin(), lines.end(), 0);
+	return sum;
 }
 
 int d1p2()
 {
 	std::ifstream file("day1.txt");
-	std::string line;
 	std::vector<int> lines;
-	std::map<int, bool> map;
-	int found = 0;
-	int current = 0;
+	std::unordered_map<int, char> map;
+	int found = 0, current = 0;
 
-	while (std::getline(file, line))
+	for (std::string line; std::getline(file, line);)
 		lines.push_back(std::stoi(line));
 
 	while (found == 0) {
 		for(auto line : lines) {
 			current += line;
 
-			if (map.count(current) > 0) {
+			if (map.find(current) != map.end()) {
 				found = current;
 				break;
 			}
 
-			map[current] = true;
+			map[current] = 0;
 		}
 	}
 
@@ -44,7 +42,16 @@ int main()
 {
 	std::cout << "Advent of code 2018" << std::endl;
 	std::cout << "===================" << std::endl;
+
 	std::cout << "Day 1:" << std::endl;
-	std::cout << "\tPart 1: " << d1p1() << std::endl;
-	std::cout << "\tPart 2: " << d1p2() << std::endl;
+
+	clock_t d1p1_start = clock();
+	int d1p1_res = d1p1();
+	clock_t d1p1_end = clock();
+	std::cout << "\tPart 1: " << d1p1_res << " | Time: " << (double)(d1p1_end - d1p1_start) / CLOCKS_PER_SEC << std::endl;
+
+	clock_t d1p2_start = clock();
+	int d1p2_res = d1p2();
+	clock_t d1p2_end = clock();
+	std::cout << "\tPart 2: " << d1p2_res << " | Time: " << (double)(d1p2_end - d1p2_start) / CLOCKS_PER_SEC << std::endl;
 }
