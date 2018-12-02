@@ -3,7 +3,6 @@
 int d1p1()
 {
 	std::ifstream file("day1.txt");
-	std::vector<int> lines;
 	int sum = 0;
 
 	for (std::string line; std::getline(file, line);)
