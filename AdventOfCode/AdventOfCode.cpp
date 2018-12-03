@@ -78,22 +78,6 @@ std::string d2p2()
 		std::unordered_map<char, int> count;
 		bool two = false, three = false;
 		ids.push_back(line);
-
-		for (const char& c : line)
-		{
-			if (count.find(c) == count.end())
-				count[c] = 0;
-			count[c] += 1;
-		}
-
-		for (const auto& x : count)
-		{
-			if (x.second == 2) two = true;
-			if (x.second == 3) three = true;
-		}
-
-		if (two) c2 += 1;
-		if (three) c3 += 1;
 	}
 
 	std::vector<char> r;
