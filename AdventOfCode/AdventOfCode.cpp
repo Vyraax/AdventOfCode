@@ -108,13 +108,13 @@ int d3p1()
 {
 	const std::size_t WIDTH = 1000;
 	const std::size_t HEIGHT = 1000;
-	std::ifstream file("day3.txt");
 	static int grid[WIDTH][HEIGHT] = {{0}};
-	
+	std::ifstream file("day3.txt");
+	std::regex rgx("#(\\d+)\\s\\@\\s(\\d+),(\\d+):\\s(\\d+)x(\\d+)");
+	std::smatch match;
+
 	for (std::string line; std::getline(file, line);)
 	{
-		std::regex rgx("#(\\d+)\\s\\@\\s(\\d+),(\\d+):\\s(\\d+)x(\\d+)");
-		std::smatch match;
 		const std::string str(line);
 
 		if (std::regex_search(str.begin(), str.end(), match, rgx))
@@ -138,6 +138,52 @@ int d3p1()
 				area += 1;
 
 	return area;
+}
+
+int d3p2()
+{
+	const std::size_t WIDTH = 1000;
+	const std::size_t HEIGHT = 1000;
+	static int grid[WIDTH][HEIGHT] = {{0}};
+
+	std::ifstream file("day3.txt");
+	std::regex rgx("#(\\d+)\\s\\@\\s(\\d+),(\\d+):\\s(\\d+)x(\\d+)");
+	std::smatch match;
+	std::vector<int> ids;
+
+	for (std::string line; std::getline(file, line);)
+	{
+		const std::string str(line);
+
+		if (std::regex_search(str.begin(), str.end(), match, rgx))
+		{
+			int id     = std::atoi(match[1].str().c_str());
+			int left   = std::atoi(match[2].str().c_str());
+			int top    = std::atoi(match[3].str().c_str());
+			int width  = std::atoi(match[4].str().c_str());
+			int height = std::atoi(match[5].str().c_str());
+
+			ids.push_back(id);
+
+			for (int x = 0; x < width; ++x) 
+			{
+				for (int y = 0; y < height; ++y) 
+				{
+					int prev = grid[x + left][y + top];
+
+					if (prev == 0)
+						grid[x + left][y + top] = id;
+					else 
+					{
+						ids.erase(std::remove(ids.begin(), ids.end(), id), ids.end());
+						ids.erase(std::remove(ids.begin(), ids.end(), prev), ids.end());
+					}
+				}
+			}
+		}
+	}
+
+	return ids[0];
 }
 
 double getReport(clock_t end, clock_t start) {
@@ -182,6 +228,11 @@ int main()
 	int d3p1_res = d3p1();
 	clock_t d3p1_end = clock();
 	std::cout << "\tPart 1: " << d3p1_res << "\tTime: " << getReport(d3p1_end, d3p1_start) << " s" << std::endl;
+
+	clock_t d3p2_start = clock();
+	int d3p2_res = d3p2();
+	clock_t d3p2_end = clock();
+	std::cout << "\tPart 2: " << d3p2_res << "\tTime: " << getReport(d3p2_end, d3p2_start) << " s" << std::endl << std::endl;
 
 	std::cout << "======================================" << std::endl;
 	clock_t total_end = clock();
