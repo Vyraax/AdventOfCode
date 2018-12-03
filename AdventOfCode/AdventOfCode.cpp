@@ -71,14 +71,9 @@ std::string d2p2()
 {
 	std::ifstream file("day2.txt");
 	std::vector<std::string> ids;
-	short c2 = 0, c3 = 0;
 
 	for (std::string line; std::getline(file, line);)
-	{
-		std::unordered_map<char, int> count;
-		bool two = false, three = false;
 		ids.push_back(line);
-	}
 
 	std::vector<char> r;
 	std::string str;
