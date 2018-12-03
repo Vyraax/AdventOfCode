@@ -70,16 +70,16 @@ int d2p1()
 std::string d2p2()
 {
 	std::ifstream file("day2.txt");
-	std::vector<std::string> ids;
+	std::vector<std::string> lines;
+	std::vector<char> result;
+	std::string str;
 
 	for (std::string line; std::getline(file, line);)
-		ids.push_back(line);
+		lines.push_back(line);
 
-	std::vector<char> r;
-	std::string str;
-	for (const auto& x : ids) 
+	for (const auto& x : lines)
 	{
-		for (const auto& y : ids)
+		for (const auto& y : lines)
 		{
 			short diff = 0;
 			for (unsigned int i = 0; i < x.size(); ++i)
@@ -90,9 +90,9 @@ std::string d2p2()
 			{
 				for (unsigned int i = 0; i < x.size(); ++i)
 					if (x[i] == y[i])
-						r.push_back(x[i]);
+						result.push_back(x[i]);
 
-				for (const auto& c : r)
+				for (const auto& c : result)
 					str += c;
 
 				return str;
@@ -131,7 +131,7 @@ int main()
 	clock_t d2p1_start = clock();
 	int d2p1_res = d2p1();
 	clock_t d2p1_end = clock();
-	std::cout << "\tPart 1: " << d2p1_res << "\tTime: " << getReport(d2p1_end, d2p1_start) << " s" << std::endl << std::endl;
+	std::cout << "\tPart 1: " << d2p1_res << "\tTime: " << getReport(d2p1_end, d2p1_start) << " s" << std::endl;
 
 	clock_t d2p2_start = clock();
 	std::string d2p2_res = d2p2();
