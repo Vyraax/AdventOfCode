@@ -103,6 +103,43 @@ std::string d2p2()
 	return str;
 }
 
+
+int d3p1()
+{
+	const std::size_t WIDTH = 1000;
+	const std::size_t HEIGHT = 1000;
+	std::ifstream file("day3.txt");
+	static int grid[WIDTH][HEIGHT] = {{0}};
+	
+	for (std::string line; std::getline(file, line);)
+	{
+		std::regex rgx("#(\\d+)\\s\\@\\s(\\d+),(\\d+):\\s(\\d+)x(\\d+)");
+		std::smatch match;
+		const std::string str(line);
+
+		if (std::regex_search(str.begin(), str.end(), match, rgx))
+		{
+			int id     = std::atoi(match[1].str().c_str());
+			int left   = std::atoi(match[2].str().c_str());
+			int top    = std::atoi(match[3].str().c_str());
+			int width  = std::atoi(match[4].str().c_str());
+			int height = std::atoi(match[5].str().c_str());
+
+			for (int y = top; y < (top + height); ++y)
+				for (int x = left; x < (left + width); ++x)
+					grid[x][y] += 1;
+		}
+	}
+
+	int area = 0;
+	for (int y = 0; y < HEIGHT; ++y)
+		for (int x = 0; x < WIDTH; ++x)
+			if (grid[x][y] > 1)
+				area += 1;
+
+	return area;
+}
+
 double getReport(clock_t end, clock_t start) {
 	return (double)(end - start) / CLOCKS_PER_SEC;
 }
@@ -137,6 +174,14 @@ int main()
 	std::string d2p2_res = d2p2();
 	clock_t d2p2_end = clock();
 	std::cout << "\tPart 2: " << d2p2_res << "\tTime: " << getReport(d2p2_end, d2p2_start) << " s" << std::endl << std::endl;
+
+	std::cout << "Day 3:" << std::endl;
+	std::cout << "======================================" << std::endl;
+
+	clock_t d3p1_start = clock();
+	int d3p1_res = d3p1();
+	clock_t d3p1_end = clock();
+	std::cout << "\tPart 1: " << d3p1_res << "\tTime: " << getReport(d3p1_end, d3p1_start) << " s" << std::endl;
 
 	std::cout << "======================================" << std::endl;
 	clock_t total_end = clock();
